@@ -2,7 +2,16 @@
   <div class="header">
     <ul>
       <li>Головна</li>
-      <li>Валюта</li>
+      <li>
+        <mat-form-field appearance="fill">
+          <mat-label>Валюта</mat-label>
+          <mat-select [(ngModel)]="selectedCurrency">
+            <mat-option *ngFor="let currency of currencyArray" [value]="currency.cc">
+              {{currency.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </li>
       <li>Форма оренди</li>
     </ul>
   </div>
@@ -25,12 +34,13 @@
   </div>
   <div class="mall-slide">
     <div class="slid-content">
-      <div class="mall-show-slide fade" *ngFor="let item of Imagedata;">
-        <img src="{{item}}" style="width:100%">
+      <div class="mall-show-slide fade" *ngFor="let item of flatData;">
+        <img src="{{item.img}}" style="width:100%">
+        <span class="price" *ngIf="currencyValue">{{priceInCurrencyFunc(item.price)}} {{currencyService.currencyType}}</span>
       </div>
       <div class="mall-carousel-ind">
         <ul>
-          <li *ngFor="let item of Imagedata; let i = index;" [class.mall-this]="startIndex - 1 === i"></li>
+          <li *ngFor="let item of flatData; let i = index;" [class.mall-this]="startIndex - 1 === i"></li>
         </ul>
       </div>
     </div>

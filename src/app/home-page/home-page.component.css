@@ -22,7 +22,7 @@
   width: 600px;
   background-color: rgba(0, 0, 0, .1);
   text-align: center;
-  padding:10px;
+  padding: 10px;
 }
 
 .header ul {
@@ -120,4 +120,16 @@
   to {
     opacity: 1
   }
+}
+
+.price {
+  top: 15px;
+  right: 15px;
+  position: absolute;
+  color: white;
+  font-size: 20px;
+}
+
+.mall-show-slide {
+  position: relative;
 }

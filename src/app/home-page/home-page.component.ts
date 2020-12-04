@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {CurrencyService} from '../service/currency.service';
 
 @Component({
   selector: 'app-home-page',
@@ -7,17 +8,45 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
   startIndex = 0;
-  Imagedata = [
-    'https://cf.bstatic.com/images/hotel/max1024x768/162/162182692.jpg',
-    'https://cf.bstatic.com/images/hotel/max1024x768/271/27122777.jpg',
-    'https://cf.bstatic.com/images/hotel/max1024x768/174/174155818.jpg',
+  currencyValue = null;
+  currencyArray = [{
+    name: 'Долар США',
+    cc: 'USD'
+  }, {
+    name: 'Євро',
+    cc: 'EUR'
+  }, {
+    name: 'Фунт стерлінгів',
+    cc: 'GBP'
+  }];
+  selectedCurrency = 'USD';
+  flatData = [
+    {img: 'https://cf.bstatic.com/images/hotel/max1024x768/162/162182692.jpg', price: '5000'},
+    {img: 'https://cf.bstatic.com/images/hotel/max1024x768/271/27122777.jpg', price: '8000'},
+    {img: 'https://cf.bstatic.com/images/hotel/max1024x768/174/174155818.jpg', price: '6000'},
   ];
 
-  constructor() {
+  constructor(public currencyService: CurrencyService) {
   }
 
   ngOnInit() {
     this.Repeat();
+    this.currencyService.getCurrencyData().subscribe(data => {
+      this.currencyValue = data;
+      this.priceInCurrency();
+    });
+  }
+
+  priceInCurrency() {
+    this.currencyValue.forEach((item) => {
+      if (item.cc === this.selectedCurrency) {
+        this.currencyValue = item.rate;
+      }
+    });
+  }
+
+  priceInCurrencyFunc(item) {
+    return (item / this.currencyValue).toFixed(2);
   }
 
   Repeat() {
